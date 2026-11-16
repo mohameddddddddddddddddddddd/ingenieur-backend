@@ -1,0 +1,43 @@
+### Extension VS Code : "REST Client" (humao.rest-client)
+@host = http://localhost:3000
+
+### 1. Inscription (agent par défaut)
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{ "nom": "Ahmed", "email": "ahmed@sangconnect.tn", "password": "Password123" }
+
+### 2. Inscription ADMIN (pour tester les rôles)
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{ "nom": "Admin", "email": "admin@sangconnect.tn", "password": "Password123", "role": "ADMIN" }
+
+### 3. Login (copiez le token)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "ahmed@sangconnect.tn", "password": "Password123" }
+
+### 4. Sans token -> 401
+GET {{host}}/api/dons
+
+### 5. Avec token -> 200 (remplacez VOTRE_TOKEN)
+GET {{host}}/api/dons
+Authorization: Bearer VOTRE_TOKEN
+
+### 6. Moi
+GET {{host}}/api/auth/me
+Authorization: Bearer VOTRE_TOKEN
+
+### 7. Mauvais rôle (agent) -> 403
+DELETE {{host}}/api/users/1
+Authorization: Bearer VOTRE_TOKEN
+
+### 8. Créer un don (ADMIN, AGENT_CENTRE) / Modifier le stock (ADMIN, RESPONSABLE_STOCK)
+POST {{host}}/api/dons
+Authorization: Bearer VOTRE_TOKEN
+
+###
+PUT {{host}}/api/stock
+Authorization: Bearer VOTRE_TOKEN
